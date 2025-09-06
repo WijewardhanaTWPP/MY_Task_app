@@ -3,9 +3,11 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_scss import Scss
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime as DateTime
+from prometheus_flask_exporter import PrometheusMetrics 
 
 #my app 
 app = Flask(__name__)
+metrics=PrometheusMetrics(app)
 Scss(app, static_dir='static', asset_dir='assets')
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 db = SQLAlchemy(app)
