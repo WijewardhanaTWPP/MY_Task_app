@@ -7,10 +7,12 @@ from prometheus_flask_exporter import PrometheusMetrics
 
 #my app 
 app = Flask(__name__)
-metrics=PrometheusMetrics(app)
 Scss(app, static_dir='static', asset_dir='assets')
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 db = SQLAlchemy(app)
+
+# Initialize Prometheus exporter **after** app & extensions
+metrics = PrometheusMetrics(app, path="/metrics")  # explicit path
 
 #Data class(Row of data)
 class Mytask(db.Model):
